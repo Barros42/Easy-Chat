@@ -1,6 +1,7 @@
 body{
     width: 100%;
     height: 100%;
+    background-color: #f1f1f1;
 }
 
 #Container{
@@ -9,10 +10,11 @@ body{
     width: 100%;
     height: 100vh;
     margin: auto;
+    position: relative;
 }
 
 /*
-@ HEADER SECTION
+@ START HEADER SECTION
 **/
 
 #Header{
@@ -23,5 +25,48 @@ body{
 }
 
 /*
-@ HEADER SECTION
+@ END HEADER SECTION
+**/
+
+/*
+@ START MESSAGE SECTION
+**/
+
+#MessageBody{
+    float: left;
+    overflow: scroll;
+    width: 100%;
+    max-height: calc(100vh - 100px);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#MessageBody::-webkit-scrollbar{
+    display: none;
+}
+
+/*
+@ END MESSAGE SECTION
+**/
+
+
+
+
+
+
+/*
+@ START FOOTER SECTION
+**/
+
+#Footer{
+    float: left;
+    width: 100%;
+    height: 100px;
+    background-color: green;
+    position: absolute;
+    bottom: 0;
+}
+
+/*
+@ END FOOTER SECTION
 **/
