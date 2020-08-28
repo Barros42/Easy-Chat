@@ -44,6 +44,7 @@ body{
     max-height: calc(100vh - 100px);
     box-sizing: border-box;
     padding: 10px;
+    padding-bottom: 80px;
 }
 
 #MessageBody::-webkit-scrollbar{

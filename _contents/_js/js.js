@@ -39,5 +39,5 @@ function createSentedMessage(userName, timeStamp, message) {
 // It's just a test
 
 for(let i = 0; i<10; i++){
-    createSentedMessage('Matheus de Barros', '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.');
+    createSentedMessage('Matheus de Barros', '21:5'+i, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.');
 }
