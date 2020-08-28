@@ -5,6 +5,23 @@ body{
 
 #Container{
     background-color: red;
-    width: 100px;
+    max-width: 600px;
+    width: 100%;
     height: 100vh;
+    margin: auto;
 }
+
+/*
+@ HEADER SECTION
+**/
+
+#Header{
+    float: left;
+    width: 100%;
+    height: 80px;
+    background-color: blue;
+}
+
+/*
+@ HEADER SECTION
+**/
