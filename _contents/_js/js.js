@@ -25,7 +25,7 @@ function createSentedMessage(userName, timeStamp, message) {
     let newMessage = `
     <div class="Message Sented">
         <div class="AuthorAndTime">
-            <div class="Author">${userName}</div>
+            <div class="Author"> · ${userName}</div>
             <div class="TimeStamp">${timeStamp}</div>
         </div>
         <div class="Content">${message}</div>

@@ -60,6 +60,7 @@ body{
     float: right;
     height: auto;
     margin: 10px;
+    margin-top: 0;
 }
 
 #MessageBody .AuthorAndTime{
@@ -80,7 +81,7 @@ body{
 
 #MessageBody .Message .TimeStamp{
     float: right;
-    margin-right: 10px;
+    margin-right: 5px;
     font-size: 0.9em;
     color: #dadada;
     height: 20px;
