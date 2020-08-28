@@ -51,14 +51,14 @@ function createNewMessageInContext(userName, timeStamp, message, sented) {
 }
 
 
-// It's just a test
-
+// It's just for test
 for(let i = 0; i<1000; i++){
     
     let enviado = true
     let userName = 'Lucas Miranda'
+    let random = Math.ceil(Math.random() * 1000)
 
-    if((i % 2) === 0){
+    if((random % 2) === 0){
         enviado = false
         userName = 'Matheus de Barros'
     }

@@ -49,6 +49,7 @@ body{
     padding: 10px;
     padding-bottom: 80px;
     z-index: 90;
+    text-rendering: optimizeLegibility;
 }
 
 #MessageBody::-webkit-scrollbar{
