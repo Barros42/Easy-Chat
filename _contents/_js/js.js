@@ -4,9 +4,10 @@
  * @param {string} userName 
  * @param {dateTime} timeStamp 
  * @param {string} message 
+ * @param {boolean} sented
  */
 
-function createSentedMessage(userName, timeStamp, message) {
+function createNewMessageInContext(userName, timeStamp, message, sented) {
 
     if(!userName){
         return
@@ -20,12 +21,26 @@ function createSentedMessage(userName, timeStamp, message) {
         return
     }
 
+    if(sented === undefined || sented === null){
+        return
+    }
+
     let messageBody = $('#MessageBody')
+    let customClass = 'Sented'
+
+    if(sented === false){
+        customClass = 'Received'
+        userName += ' · '
+    } else {
+        userName = ' · ' + userName
+    }
+
+
 
     let newMessage = `
-    <div class="Message Sented">
+    <div class="Message ${customClass}">
         <div class="AuthorAndTime">
-            <div class="Author"> · ${userName}</div>
+            <div class="Author">${userName}</div>
             <div class="TimeStamp">${timeStamp}</div>
         </div>
         <div class="Content">${message}</div>
@@ -38,6 +53,15 @@ function createSentedMessage(userName, timeStamp, message) {
 
 // It's just a test
 
-for(let i = 0; i<10; i++){
-    createSentedMessage('Matheus de Barros', '21:5'+i, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.');
+for(let i = 0; i<1000; i++){
+    
+    let enviado = true
+    let userName = 'Lucas Miranda'
+
+    if((i % 2) === 0){
+        enviado = false
+        userName = 'Matheus de Barros'
+    }
+
+    createNewMessageInContext(userName, '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
 }

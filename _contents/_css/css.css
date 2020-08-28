@@ -56,46 +56,79 @@ body{
 }
 
 #MessageBody .Message{
-    max-width: 90%;
+    max-width: 100%;
+    width: 100%;
     float: right;
     height: auto;
-    margin: 10px;
     margin-top: 0;
+    margin-bottom: 10px;
 }
 
 #MessageBody .AuthorAndTime{
-    width: 100%;
-    float: right;
+    width: 90%;
     line-height: 20px;
     height: 20px;
+}
+
+.Message.Sented .AuthorAndTime{
+    float: right;
+}
+
+.Message.Received .AuthorAndTime{
+    float: left;
 }
 
 #MessageBody .Message .Author{
     font-weight: bold;
     letter-spacing: 1px;
     text-align: right;
-    float: right;
     height: 20px;
     line-height: 20px;
 }
 
-#MessageBody .Message .TimeStamp{
+.Message.Sented .Author{
     float: right;
-    margin-right: 5px;
+}
+
+.Message.Received .Author{
+    float: left;
+}
+
+#MessageBody .Message .TimeStamp{
     font-size: 0.9em;
     color: #dadada;
     height: 20px;
     line-height: 20px;
 }
 
+.Message.Sented .TimeStamp{
+    float: right;
+    margin-right: 5px;
+}
+
+.Message.Received .TimeStamp{
+    float: left;
+    margin-left: 5px;
+}
+
 #MessageBody .Message .Content{
-    background-color: #4b4b4b;
-    border-radius: 10px 0px 10px 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     padding: 10px;
     line-height: 24px;
     margin-top: 5px;
-    margin-top: 22px;
+    max-width: 90%;
+}
+
+.Message.Sented .Content{
+    float: right;
+    border-radius: 10px 0px 10px 10px;
+    background-color: #4b4b4b;
+}
+
+.Message.Received .Content{
+    float: left;
+    border-radius: 0px 10px 10px 10px;
+    background-color: #6d6d6d;
 }
 
 /*
