@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+
+
 body{
     width: 100%;
     height: 100%;
     background-color: #f1f1f1;
+    font-family: 'Roboto', sans-serif;
 }
 
 #Container{
-    background-color: red;
+    background-color: #292929;
+    color: #FFF;
     max-width: 600px;
     width: 100%;
     height: 100vh;
@@ -21,7 +26,7 @@ body{
     float: left;
     width: 100%;
     height: 80px;
-    background-color: blue;
+    background-color: #4b4b4b;
 }
 
 /*
