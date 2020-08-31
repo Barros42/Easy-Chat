@@ -74,6 +74,8 @@ body{
     margin-top: 10px;
     background-color: #4b4b4b;
     border: 0;
+    outline: none;
+    cursor: pointer;
 }
 
 #Header .ButtonMenuAccess:after{

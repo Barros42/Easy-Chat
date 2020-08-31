@@ -2,7 +2,7 @@
  * 
  */
 function showMenuOptions() {
-	alert("to-do!")
+	alert("To-do!")
 }
 
 
