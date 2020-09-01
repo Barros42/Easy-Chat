@@ -26,9 +26,7 @@ function createNewMessageInContext(userName, timeStamp, message, sented) {
 
     if(!message){
         return
-    } else {
-        message = _removeCursedWords(message)
-    }
+    } 
 
     if(sented === undefined || sented === null){
         return
@@ -63,9 +61,9 @@ function sendMessage(){
 
     if(!messageText){
         return
+    } else {
+        messageText = _removeCursedWords(messageText)
     }
-
-    // filter message here
 
     createNewMessageInContext('Matheus de Barros', `${new Date().getHours()}:${new Date().getMinutes()}` , messageText, true)
 
