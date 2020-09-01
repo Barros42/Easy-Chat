@@ -99,7 +99,7 @@ body{
     max-height: calc(100vh - 100px);
     box-sizing: border-box;
     padding: 10px;
-    padding-bottom: 80px;
+    padding-bottom: 35px;
     z-index: 90;
     text-rendering: optimizeLegibility;
 }
@@ -200,10 +200,61 @@ body{
 #Footer{
     float: left;
     width: 100%;
-    height: 100px;
-    background-color: green;
+    height: 60px;
+    background-color:#292929;
     position: absolute;
     bottom: 0;
+}
+
+#Footer #text-div{
+    float: left;
+    width: calc(100% - 60px);
+    height: 100%;
+}
+
+#Footer #text-div #text-input{
+    width: 95%;
+    height: 70%;
+    margin-top: 8px;
+    margin-left: 2.5%;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    padding-left: 8px;
+    background-color: #4b4b4b;
+    color: #FFF;
+}
+
+#Footer #button-div{
+    float: left;
+    width: 60px;
+    height: 60px;
+}
+
+#Footer #button-div button{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border: none;
+    border-radius: 100%;
+    outline: none;
+    background-color: #4b4b4b;
+    color: #FFF;
+    font-weight: bold;
+    background-image: url('./../_assets/_icons/send.svg');
+    background-position: center center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#Footer #button-div button:hover{
+    opacity: 0.8;
+}
+
+#Footer #button-div button:active{
+    opacity: 1;
 }
 
 /*
