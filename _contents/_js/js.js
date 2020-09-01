@@ -28,7 +28,6 @@ function createNewMessageInContext(userName, timeStamp, message, sented) {
         return
     } else {
         message = _removeCursedWords(message)
-        console.log(message)
     }
 
     if(sented === undefined || sented === null){
