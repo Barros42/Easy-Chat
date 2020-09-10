@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
 
 
+@media only screen and (min-width: 600px){
+	#Container{ border-radius: 25px 25px 25px 25px; }
+	#ModalNickname{ border-radius: 25px 25px 0px 0px; }
+	#Header{ border-radius: 25px 25px 0px 0px; }
+	#Footer{ border-radius: 0px 0px 25px 25px; }
+}
+
 body{
     width: 100%;
     height: 100%;
@@ -16,8 +23,116 @@ body{
     height: 100vh;
     margin: auto;
     position: relative;
-    border-radius: 25px 25px 0px 0px;
 }
+
+/*
+@ START MODAL SECTION
+**/
+
+#ModalNickname{
+	position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+    background-color: #4b4b4b;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+}
+
+#ModalNickname .modal-window {
+    background-color: #292929;
+    width: 85%;
+    margin-top: 10%;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 17%;
+    padding-bottom: 22%;
+    border-radius: 25px 25px 25px 25px;
+    position: relative;
+}
+
+#ModalNickname .modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #4b4b4b;
+    height: 45px;
+    width: 45px;
+    font-size: 35px;
+    line-height: 45px;
+    text-align: center;
+    z-index: 1;
+}
+
+#ModalNickname .modal-close:hover,
+#ModalNickname .modal-close:focus {
+    cursor: pointer;
+}
+
+#ModalNickname .modal-open {
+    display: block;
+}
+
+#ModalNickname #name-title-div .TextTitleModal{
+	position: absolute;
+	width: 100%;
+	top: 0;
+}
+
+
+#ModalNickname #name-title-div .TextTitleModal{
+	font-size: 1.25em;
+	font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+#ModalNickname #name-input-div{
+	float: left;
+	width: 80%;
+}
+
+#ModalNickname #name-input-div #name-input{
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border: none;
+    outline: none;
+    background: linear-gradient(#6d6d6d, #6d6d6d) center bottom 0.5px /calc(100% - 5px) 2px no-repeat;
+    color: #fff;
+    font-size: 1.1em;
+    margin-top: 25px;
+}
+
+#ModalNickname #name-input-div #name-input::placeholder{
+    color: #4b4b4b;
+}
+
+#ModalNickname #name-button-div{
+	float: right;
+	width: 15%;
+	margin-right: 5%;
+}
+
+#ModalNickname #name-button-div button{
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+#ModalNickname #name-button-div button:after{
+  	content: '\2713';
+  	font-size: 3.0em;
+  	color: #6d6d6d;
+}
+
+/*
+@ END MODAL SECTION
+**/
 
 /*
 @ START HEADER SECTION
@@ -31,7 +146,6 @@ body{
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
     z-index: 99;
     position: relative;
-    border-radius: 25px 25px 0px 0px;
 }
 
 #Header #HeaderUserImage { 
@@ -118,7 +232,7 @@ body{
 }
 
 #MessageBody .AuthorAndTime{
-    width: 90%;
+    width: 100%;
     line-height: 20px;
     height: 20px;
 }
@@ -187,11 +301,6 @@ body{
 /*
 @ END MESSAGE SECTION
 **/
-
-
-
-
-
 
 /*
 @ START FOOTER SECTION

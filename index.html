@@ -14,11 +14,23 @@
             	<div id="HeaderUserImage">
             		<image class="UserImage" src="_contents/_assets/defaultuser.png" />
             	</div>
-            	<div id="HeaderNickname"><p class="TextNickName">Lucas Miranda</p></div>
+            	<div id="HeaderNickname"><p class="TextNickName"></p></div>
             	<div id="HeaderMenuButton">
-            		<button class="ButtonMenuAccess" onclick="showMenuOptions()"></button>
+            		<button class="ButtonMenuAccess" onclick="_showMenuOptions()"></button>
             	</div>
             </div>
+            <div id="ModalNickname" class="modal">
+            	<div class="modal-window">
+            		<span class="modal-close" data-dismiss="modal">&times;</span>
+            		<div id="name-title-div"><p class="TextTitleModal">Definir Apelido</p></div>
+        			<div id="name-input-div">
+                    	<input type="text" maxlength="30" name="text-input" id="name-input" placeholder="Ex: Matheus">
+                	</div>
+                	<div id="name-button-div">
+                		<button id="change-name"></button>
+                	</div>
+    			</div>
+			</div>
             <div id="MessageBody"></div>
             <div id="Footer">
                 

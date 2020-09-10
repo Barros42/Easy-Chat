@@ -1,22 +1,43 @@
-/**
- * 
- */
-function showMenuOptions() {
-	alert("To-do!")
+// function by @trincot - https://stackoverflow.com/questions/47616381/how-to-exclude-all-shades-of-gray-while-generating-random-hex-color-code
+function generateRandomColor() {
+    // Threshold can be between 0 and 127: 
+    //    the higher it is, the more colors are considered to be too grey-like.
+    const threshold = 50;
+    // Generate three color parts randomly
+    const parts = Array.from(Array(3), _ => 
+            Math.floor(Math.random()*256)
+        ).sort( (a, b) => a-b );
+    
+    // Check whether they are too close to the same value:
+    if (parts[2] - parts[0] < threshold) { // color is too greyish
+        // Replace the middle one with a random value outside of the "too close" range
+        const exclude = Math.min(255, parts[0] + threshold) 
+                      - Math.max(0, parts[2] - threshold);
+        parts[1] = Math.floor(Math.random()*(256-exclude));
+        if (parts[1] >= parts[2] - threshold) parts[1] += exclude;
+    }
+    // Shuffle and format the color parts and return the resulting string
+    return parts
+        .sort( (a, b) => Math.random() < 0.5 )
+        .map( p => ('0' + p.toString(16)).substr(-2) )
+        .join('');
 }
-
 
 /**
  * 
  * @param {string} userName 
+ * @param {string} userColor 
  * @param {dateTime} timeStamp 
  * @param {string} message 
  * @param {boolean} sented
  */
-
-function createNewMessageInContext(userName, timeStamp, message, sented) {
+function createNewMessageInContext(userName, userColor, timeStamp, message, sented) {
 
     if(!userName){
+        return
+    }
+
+    if(!userColor){
         return
     }
 
@@ -45,14 +66,13 @@ function createNewMessageInContext(userName, timeStamp, message, sented) {
     let newMessage = `
     <div class="Message ${customClass}">
         <div class="AuthorAndTime">
-            <div class="Author">${userName}</div>
+            <div class="Author" style="color: ${userColor}">${userName}</div>
             <div class="TimeStamp">${timeStamp}</div>
         </div>
         <div class="Content">${message}</div>
     </div>`
         
     messageBody.append(newMessage)
-
 }
 
 function sendMessage(){
@@ -65,12 +85,19 @@ function sendMessage(){
         messageText = _removeCursedWords(messageText)
     }
 
-    createNewMessageInContext('Matheus de Barros', `${new Date().getHours()}:${new Date().getMinutes()}` , messageText, true)
+    createNewMessageInContext(_getUserName(), _getUserColor(), `${new Date().getHours()}:${new Date().getMinutes()}` , messageText, true)
 
     _clearMessageText()
     _scrollMessageDivToBottom()
 }
 
+function _showMenuOptions() {
+	$("#ModalNickname").show();
+
+	$(".modal-close").show();
+	$("#name-button-div button").hide();
+	$("#name-input").val(_getUserName());
+}
 
 function _clearMessageText(){
     $("#text-input").val('')
@@ -83,6 +110,41 @@ function _getMessageText(){
 
 function _scrollMessageDivToBottom(){
     $("#MessageBody").scrollTop( $("#MessageBody")[0].scrollHeight + 100);
+}
+
+function _setUserName(name){
+    if(!name){
+        return
+    }
+
+    localStorage.setItem('userName', name)
+
+    $('.TextNickName').text(name);
+}
+
+function _getUserName(){
+    if(!localStorage.getItem('userName')){
+        return
+    } else {
+        return localStorage.getItem('userName')
+    }
+}
+
+function _setUserColor(){
+    if(!localStorage.getItem('userColor')){
+    	let randomColor = "#" + generateRandomColor()
+        localStorage.setItem('userColor', randomColor)
+    } 
+}
+
+function _getUserColor(){
+    if(!localStorage.getItem('userColor')){
+        let randomColor = "#" + generateRandomColor()
+        localStorage.setItem('userColor', randomColor)
+        return randomColor
+    } else {
+        return localStorage.getItem('userColor')
+    }
 }
 
 function _setUserUuid(){
@@ -109,32 +171,64 @@ function _registerListener(){
     });
 }
 
+function _checkUserProfile(){
+    if(!_getUserName()){
+    	$("#ModalNickname").show();
+    	$(".modal-close").hide();
+    	$("#name-button-div button").hide();
+    }
+    else $('.TextNickName').text(_getUserName());
+
+    $('.TextNickName').css('color', _getUserColor()); 
+}
+
 // It's just for test
+let color1 = _getUserColor()
+let color2 = "#" + generateRandomColor()
 for(let i = 0; i<10; i++){
     
     let enviado = true
     let userName = 'Lucas Miranda'
+    let userColor = color1
     let random = Math.ceil(Math.random() * 1000)
 
     if((random % 2) === 0){
         enviado = false
         userName = 'Matheus de Barros'
+        userColor = color2
     }
 
-    createNewMessageInContext(userName, '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
+    createNewMessageInContext(userName, userColor, '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
 }
 
 
 // BOOTSTRAP!
-    $(document).ready(function () {
-        
-        $("#send-button").click(function (){ 
-            sendMessage()
-        })
+$(document).ready(function () {
+   
+    $("#send-button").click(function (){ 
+        sendMessage()
+    })
 
-        setTimeout(() => {
-            _scrollMessageDivToBottom()
-            _setUserUuid()
-            _registerListener()
-        }, 100);
+    $("#change-name").click(function (){ 
+        _setUserName($("#name-input").val())
+        $("#ModalNickname").hide();
+    })
+
+    $('#name-input').keyup(function (e) {
+    	var name = $.trim($('#name-input').val());
+		if(name == "") $("#name-button-div button").hide();
+		else $("#name-button-div button").show();	
     });
+
+    $(".modal-close").click(function (){ 
+        $(".modal").hide();
+    })
+
+    setTimeout(() => {
+        _scrollMessageDivToBottom()
+        _setUserUuid()
+        _setUserColor()
+        _checkUserProfile()
+        _registerListener()
+    }, 100);
+});
