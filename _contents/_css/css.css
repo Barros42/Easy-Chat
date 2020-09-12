@@ -284,6 +284,7 @@ body{
     line-height: 24px;
     margin-top: 5px;
     max-width: 90%;
+    word-break: break-all;
 }
 
 .Message.Sented .Content{
