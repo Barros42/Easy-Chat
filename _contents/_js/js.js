@@ -1,3 +1,32 @@
+// Firebase instances
+var config = {
+apiKey: "AIzaSyAOnocDSCMQ8VnxJGhLQNa6CAKm_w48Yrw",
+authDomain: "easy-zap.firebaseapp.com",
+databaseURL: "https://easy-zap.firebaseio.com/",
+storageBucket: "easy-zap.appspot.com"
+};
+if (!firebase.apps.length) {
+	firebase.initializeApp(config);
+}
+var database = firebase.database();
+
+function writeDatabaseUserMessage(messageId, userUuid, name, color, text, date, time) {
+	firebase.database().ref('messages/' + messageId).set({
+		userId: userUuid,
+		userName: name,
+		userColor: color,
+		messageBody: text,
+		createdDate: date,
+		createdTime: time
+	});
+}
+
+var messagesListener = firebase.database().ref('messages/');
+messagesListener.on('child_added', function(data) {
+	if(data.val().userId == _getUserUuid()) createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, true);
+	else createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, false);
+});
+
 // function by @trincot - https://stackoverflow.com/questions/47616381/how-to-exclude-all-shades-of-gray-while-generating-random-hex-color-code
 function generateRandomColor() {
     // Threshold can be between 0 and 127: 
@@ -79,13 +108,31 @@ function sendMessage(){
 
     let messageText = _getMessageText()
 
+    var d = new Date();
+
+    let hours = ("0" + d.getHours()).slice(-2);
+    let minutes = ("0" + d.getMinutes()).slice(-2);
+    let day = ("0" + d.getDate()).slice(-2);
+    let month = ("0" + (d.getMonth()+1)).slice(-2);
+    let year = d.getFullYear();
+
+    let messageDate = `${year}-${month}-${day}`
+    let messageTime = `${hours}:${minutes}`
+
     if(!messageText){
         return
     } else {
         messageText = _removeCursedWords(messageText)
     }
 
-    createNewMessageInContext(_getUserName(), _getUserColor(), `${new Date().getHours()}:${new Date().getMinutes()}` , messageText, true)
+    var lastMessageId = 0;
+	firebase.database().ref('messages/').limitToLast(1).once('value', function(snapshot) {
+		snapshot.forEach((child) => {
+			lastMessageId = parseInt(child.key)+1;
+		});
+	});
+
+	writeDatabaseUserMessage(lastMessageId, _getUserUuid(), _getUserName(), _getUserColor(), messageText, messageDate, messageTime);
 
     _clearMessageText()
     _scrollMessageDivToBottom()
@@ -183,7 +230,7 @@ function _checkUserProfile(){
 }
 
 // It's just for test
-let color1 = _getUserColor()
+/*let color1 = _getUserColor()
 let color2 = "#" + generateRandomColor()
 for(let i = 0; i<10; i++){
     
@@ -199,8 +246,7 @@ for(let i = 0; i<10; i++){
     }
 
     createNewMessageInContext(userName, userColor, '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
-}
-
+}*/
 
 // BOOTSTRAP!
 $(document).ready(function () {
