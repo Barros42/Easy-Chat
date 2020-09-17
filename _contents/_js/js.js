@@ -23,6 +23,11 @@ function writeDatabaseUserMessage(messageId, userUuid, name, color, text, date, 
 
 var messagesListener = firebase.database().ref('messages/');
 messagesListener.on('child_added', function(data) {
+	let lastMessageId = 0;
+	lastMessageId = parseInt(data.key);
+
+	if(lastMessageId >= 50) firebase.database().ref('messages/' + (lastMessageId-50)).remove();
+
 	if(data.val().userId == _getUserUuid()) createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, true);
 	else createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, false);
 	_scrollMessageDivToBottom();
@@ -62,7 +67,6 @@ function generateRandomColor() {
  * @param {boolean} sented
  */
 function createNewMessageInContext(userName, userColor, timeStamp, message, sented) {
-
     if(!userName){
         return;
     }
@@ -106,10 +110,9 @@ function createNewMessageInContext(userName, userColor, timeStamp, message, sent
 }
 
 function sendMessage() {
-
     let messageText = _getMessageText();
 
-    var d = new Date();
+    let d = new Date();
 
     let hours = ("0" + d.getHours()).slice(-2);
     let minutes = ("0" + d.getMinutes()).slice(-2);
@@ -126,7 +129,7 @@ function sendMessage() {
         messageText = _removeCursedWords(messageText);
     }
 
-    var lastMessageId = 0;
+    let lastMessageId = 0;
 	firebase.database().ref('messages/').limitToLast(1).once('value', function(snapshot) {
 		snapshot.forEach((child) => {
 			lastMessageId = parseInt(child.key)+1;
@@ -234,7 +237,6 @@ function _checkUserProfile() {
 /*let color1 = _getUserColor();
 let color2 = "#" + generateRandomColor();
 for(let i = 0; i<10; i++) {
-    
     let enviado = true;
     let userName = 'Lucas Miranda';
     let userColor = color1;
@@ -251,7 +253,6 @@ for(let i = 0; i<10; i++) {
 
 // BOOTSTRAP!
 $(document).ready(function () {
-	
     $("#send-button").click(function () { 
         sendMessage();
     })
