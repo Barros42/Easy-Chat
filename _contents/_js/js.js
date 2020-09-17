@@ -1,9 +1,9 @@
 // Firebase instances
 var config = {
-apiKey: "AIzaSyAOnocDSCMQ8VnxJGhLQNa6CAKm_w48Yrw",
-authDomain: "easy-zap.firebaseapp.com",
-databaseURL: "https://easy-zap.firebaseio.com/",
-storageBucket: "easy-zap.appspot.com"
+	apiKey: "AIzaSyAOnocDSCMQ8VnxJGhLQNa6CAKm_w48Yrw",
+	authDomain: "easy-zap.firebaseapp.com",
+	databaseURL: "https://easy-zap.firebaseio.com/",
+	storageBucket: "easy-zap.appspot.com"
 };
 if (!firebase.apps.length) {
 	firebase.initializeApp(config);
@@ -25,6 +25,7 @@ var messagesListener = firebase.database().ref('messages/');
 messagesListener.on('child_added', function(data) {
 	if(data.val().userId == _getUserUuid()) createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, true);
 	else createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, false);
+	_scrollMessageDivToBottom();
 });
 
 // function by @trincot - https://stackoverflow.com/questions/47616381/how-to-exclude-all-shades-of-gray-while-generating-random-hex-color-code
@@ -63,33 +64,33 @@ function generateRandomColor() {
 function createNewMessageInContext(userName, userColor, timeStamp, message, sented) {
 
     if(!userName){
-        return
+        return;
     }
 
     if(!userColor){
-        return
+        return;
     }
 
     if(!timeStamp){
-        return
+        return;
     }
 
     if(!message){
-        return
+        return;
     } 
 
     if(sented === undefined || sented === null){
-        return
+        return;
     }
 
-    let messageBody = $('#MessageBody')
-    let customClass = 'Sented'
+    let messageBody = $('#MessageBody');
+    let customClass = 'Sented';
 
-    if(sented === false){
-        customClass = 'Received'
-        userName += ' · '
+    if(sented === false) {
+        customClass = 'Received';
+        userName += ' · ';
     } else {
-        userName = ' · ' + userName
+        userName = ' · ' + userName;
     }
 
     let newMessage = `
@@ -99,14 +100,14 @@ function createNewMessageInContext(userName, userColor, timeStamp, message, sent
             <div class="TimeStamp">${timeStamp}</div>
         </div>
         <div class="Content">${message}</div>
-    </div>`
+    </div>`;
         
-    messageBody.append(newMessage)
+    messageBody.append(newMessage);
 }
 
-function sendMessage(){
+function sendMessage() {
 
-    let messageText = _getMessageText()
+    let messageText = _getMessageText();
 
     var d = new Date();
 
@@ -116,13 +117,13 @@ function sendMessage(){
     let month = ("0" + (d.getMonth()+1)).slice(-2);
     let year = d.getFullYear();
 
-    let messageDate = `${year}-${month}-${day}`
-    let messageTime = `${hours}:${minutes}`
+    let messageDate = `${year}-${month}-${day}`;
+    let messageTime = `${hours}:${minutes}`;
 
-    if(!messageText){
-        return
+    if(!messageText) {
+    	return;
     } else {
-        messageText = _removeCursedWords(messageText)
+        messageText = _removeCursedWords(messageText);
     }
 
     var lastMessageId = 0;
@@ -134,8 +135,8 @@ function sendMessage(){
 
 	writeDatabaseUserMessage(lastMessageId, _getUserUuid(), _getUserName(), _getUserColor(), messageText, messageDate, messageTime);
 
-    _clearMessageText()
-    _scrollMessageDivToBottom()
+    _clearMessageText();
+    _scrollMessageDivToBottom();
 }
 
 function _showMenuOptions() {
@@ -146,80 +147,80 @@ function _showMenuOptions() {
 	$("#name-input").val(_getUserName());
 }
 
-function _clearMessageText(){
-    $("#text-input").val('')
-    $("#text-input").focus()
+function _clearMessageText() {
+    $("#text-input").val('');
+    $("#text-input").focus();
 }
 
-function _getMessageText(){
-    return $("#text-input").val()
+function _getMessageText() {
+    return $("#text-input").val();
 }
 
-function _scrollMessageDivToBottom(){
+function _scrollMessageDivToBottom() {
     $("#MessageBody").scrollTop( $("#MessageBody")[0].scrollHeight + 100);
 }
 
 function _setUserName(name){
-    if(!name){
-        return
+    if(!name) {
+        return;
     }
 
-    localStorage.setItem('userName', name)
+    localStorage.setItem('userName', name);
 
     $('.TextNickName').text(name);
 }
 
-function _getUserName(){
-    if(!localStorage.getItem('userName')){
-        return
+function _getUserName() {
+    if(!localStorage.getItem('userName')) {
+        return;
     } else {
-        return localStorage.getItem('userName')
+        return localStorage.getItem('userName');
     }
 }
 
-function _setUserColor(){
-    if(!localStorage.getItem('userColor')){
-    	let randomColor = "#" + generateRandomColor()
-        localStorage.setItem('userColor', randomColor)
+function _setUserColor() {
+    if(!localStorage.getItem('userColor')) {
+    	let randomColor = "#" + generateRandomColor();
+        localStorage.setItem('userColor', randomColor);
     } 
 }
 
-function _getUserColor(){
-    if(!localStorage.getItem('userColor')){
-        let randomColor = "#" + generateRandomColor()
-        localStorage.setItem('userColor', randomColor)
-        return randomColor
+function _getUserColor() {
+    if(!localStorage.getItem('userColor')) {
+        let randomColor = "#" + generateRandomColor();
+        localStorage.setItem('userColor', randomColor);
+        return randomColor;
     } else {
-        return localStorage.getItem('userColor')
+        return localStorage.getItem('userColor');
     }
 }
 
-function _setUserUuid(){
-    if(!localStorage.getItem('userUUID')){
-        localStorage.setItem('userUUID', uuidv4())
+function _setUserUuid() {
+    if(!localStorage.getItem('userUUID')) {
+        localStorage.setItem('userUUID', uuidv4());
     } 
 }
 
 function _getUserUuid(){
-    if(!localStorage.getItem('userUUID')){
-        let uuid = uuidv4()
-        localStorage.setItem('userUUID', uuid)
-        return uuid
+    if(!localStorage.getItem('userUUID')) {
+        let uuid = uuidv4();
+        localStorage.setItem('userUUID', uuid);
+        return uuid;
     } else {
-        return localStorage.getItem('userUUID')
+        return localStorage.getItem('userUUID');
     }
 }
 
-function _registerListener(){
+function _registerListener() {
     $("#text-input").keydown(function (e) { 
-        if(e.keyCode == 13){
-            sendMessage()
+        if(e.keyCode == 13) {
+            sendMessage();
         }
     });
 }
 
-function _checkUserProfile(){
-    if(!_getUserName()){
+function _checkUserProfile() {
+    if(!_getUserName()) {
     	$("#ModalNickname").show();
     	$(".modal-close").hide();
     	$("#name-button-div button").hide();
@@ -230,19 +231,19 @@ function _checkUserProfile(){
 }
 
 // It's just for test
-/*let color1 = _getUserColor()
-let color2 = "#" + generateRandomColor()
-for(let i = 0; i<10; i++){
+/*let color1 = _getUserColor();
+let color2 = "#" + generateRandomColor();
+for(let i = 0; i<10; i++) {
     
-    let enviado = true
-    let userName = 'Lucas Miranda'
-    let userColor = color1
-    let random = Math.ceil(Math.random() * 1000)
+    let enviado = true;
+    let userName = 'Lucas Miranda';
+    let userColor = color1;
+    let random = Math.ceil(Math.random() * 1000);
 
-    if((random % 2) === 0){
-        enviado = false
-        userName = 'Matheus de Barros'
-        userColor = color2
+    if((random % 2) === 0) {
+        enviado = false;
+        userName = 'Matheus de Barros';
+        userColor = color2;
     }
 
     createNewMessageInContext(userName, userColor, '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
@@ -250,23 +251,23 @@ for(let i = 0; i<10; i++){
 
 // BOOTSTRAP!
 $(document).ready(function () {
-   
-    $("#send-button").click(function (){ 
-        sendMessage()
+	
+    $("#send-button").click(function () { 
+        sendMessage();
     })
 
-    $("#change-name").click(function (){ 
-        _setUserName($("#name-input").val())
+    $("#change-name").click(function () { 
+        _setUserName($("#name-input").val());
         $("#ModalNickname").hide();
     })
 
     $('#name-input').keyup(function (e) {
     	var name = $.trim($('#name-input').val());
 		if(name == "") $("#name-button-div button").hide();
-		else $("#name-button-div button").show();	
+		else $("#name-button-div button").show();
     });
 
-    $(".modal-close").click(function (){ 
+    $(".modal-close").click(function () { 
         $(".modal").hide();
     })
 
