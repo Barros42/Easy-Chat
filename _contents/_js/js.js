@@ -26,10 +26,10 @@ messagesListener.on('child_added', function(data) {
 	let lastMessageId = 0;
 	lastMessageId = parseInt(data.key);
 
-	if(lastMessageId >= 50) firebase.database().ref('messages/' + (lastMessageId-50)).remove();
+	//if(lastMessageId >= 50) firebase.database().ref('messages/' + (lastMessageId-50)).remove();
 
-	if(data.val().userId == _getUserUuid()) createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, true);
-	else createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdTime, data.val().messageBody, false);
+	if(data.val().userId == _getUserUuid()) createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdDate, data.val().createdTime, data.val().messageBody, true);
+	else createNewMessageInContext(data.val().userName, data.val().userColor, data.val().createdDate, data.val().createdTime, data.val().messageBody, false);
 	_scrollMessageDivToBottom();
 });
 
@@ -66,12 +66,16 @@ function generateRandomColor() {
  * @param {string} message 
  * @param {boolean} sented
  */
-function createNewMessageInContext(userName, userColor, timeStamp, message, sented) {
+function createNewMessageInContext(userName, userColor, dateStamp, timeStamp, message, sented) {
     if(!userName){
         return;
     }
 
     if(!userColor){
+        return;
+    }
+
+    if(!dateStamp){
         return;
     }
 
@@ -85,6 +89,18 @@ function createNewMessageInContext(userName, userColor, timeStamp, message, sent
 
     if(sented === undefined || sented === null){
         return;
+    }
+
+    let today = new Date().toISOString().slice(0, 10);
+
+    let dateStampFormatted = '';
+
+    if(today != dateStamp)
+    {
+    	let dateStampConverted  = new Date(dateStamp);
+    	dateStampConverted.setDate(dateStampConverted.getDate() + 1);
+    	
+    	dateStampFormatted = dateStampConverted.toLocaleDateString() + ' - ';
     }
 
     let messageBody = $('#MessageBody');
@@ -101,7 +117,7 @@ function createNewMessageInContext(userName, userColor, timeStamp, message, sent
     <div class="Message ${customClass}">
         <div class="AuthorAndTime">
             <div class="Author" style="color: ${userColor}">${userName}</div>
-            <div class="TimeStamp">${timeStamp}</div>
+            <div class="TimeStamp">${dateStampFormatted}${timeStamp}</div>
         </div>
         <div class="Content">${message}</div>
     </div>`;
@@ -248,7 +264,7 @@ for(let i = 0; i<10; i++) {
         userColor = color2;
     }
 
-    createNewMessageInContext(userName, userColor, '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
+    createNewMessageInContext(userName, userColor, '2020-01-01', '21:53', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, nihil quo harum praesentium voluptatem in ad minus cumque corporis odio tempore animi deleniti officia maxime. Esse non consequuntur rem nemo.', enviado);
 }*/
 
 // BOOTSTRAP!
