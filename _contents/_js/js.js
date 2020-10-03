@@ -91,16 +91,17 @@ function createNewMessageInContext(userName, userColor, dateStamp, timeStamp, me
         return;
     }
 
-    let today = new Date().toISOString().slice(0, 10);
+    let today = new Date();
+    let todayLocale = today.toLocaleDateString();
 
-    let dateStampFormatted = '';
+    let dateStampConverted  = new Date(dateStamp);
+    dateStampConverted.setDate(dateStampConverted.getDate() + 1);
+    let dateStampLocale = dateStampConverted.toLocaleDateString();
+	let dateStampFormatted = dateStampLocale + ' - ';
 
-    if(today != dateStamp)
-    {
-    	let dateStampConverted  = new Date(dateStamp);
-    	dateStampConverted.setDate(dateStampConverted.getDate() + 1);
-    	
-    	dateStampFormatted = dateStampConverted.toLocaleDateString() + ' - ';
+    if(todayLocale <= dateStampLocale)
+    {	
+    	dateStampFormatted = '';
     }
 
     let messageBody = $('#MessageBody');
